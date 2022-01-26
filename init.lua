@@ -6,3 +6,4 @@ local include, nodecore
 include("nodes")
 include("reaction")
 include("gaseous")
+include("particles")
