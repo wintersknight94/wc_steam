@@ -35,7 +35,7 @@ local function steamy(posa, posb)
 		})
 end
 ------------------------------------------------------------------------
-nodecore.register_limited_abm({
+nodecore.register_abm({
 		label = "particles:hydrothermal",
 		interval = 20,
 		chance = 5,

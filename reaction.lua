@@ -11,7 +11,7 @@ local wsrc = "nc_terrain:water_source"
 local wflw = "nc_terrain:water_flowing"
 
 --------------------Steam Node Generation--------------------
-nodecore.register_limited_abm({
+nodecore.register_abm({
 		label = "generate steam:direct",
 		interval = 4,
 		chance = 4,
@@ -33,7 +33,7 @@ nodecore.register_limited_abm({
 		end
 	})
 	
-nodecore.register_limited_abm({
+nodecore.register_abm({
 		label = "generate steam:boiler",
 		interval = 4,
 		chance = 4,
@@ -57,7 +57,7 @@ nodecore.register_limited_abm({
 })
 
 --------------------Steam Pressure--------------------
-nodecore.register_limited_abm({
+nodecore.register_abm({
 		label = "condense steam",
 		interval = 1,
 		chance = 1,
@@ -72,7 +72,7 @@ nodecore.register_limited_abm({
 	end	
 })
 
-nodecore.register_limited_abm({
+nodecore.register_abm({
 		label = "disperse steam",
 		interval = 1,
 		chance = 1,
