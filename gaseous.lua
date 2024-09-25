@@ -109,6 +109,7 @@ nodecore.register_abm({
 		nodenames = {"group:gaseous"},
 		action = function(pos, node)
 		local altitude = pos.y
+		local airway = #nodecore.find_nodes_around(pos, "air")
                if altitude > 120 and airway > 1 then
 		     nodecore.set_node(pos, {name = "air"})
           end
