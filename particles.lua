@@ -1,8 +1,7 @@
 -- LUALOCALS < ---------------------------------------------------------
-local core, nodecore, math
-    = core, nodecore, math
+local core, nodecore, vector
+    = core, nodecore, vector
 -- LUALOCALS > ---------------------------------------------------------
-local modname = core.get_current_modname()
 local hotrock = "nc_igneous:amalgam"
 ------------------------------------------------------------------------
 local function steamy(posa, posb)
@@ -34,7 +33,7 @@ nodecore.register_abm({
 	label = "particles:hydrothermal",
 	interval = 20,
 	chance = 5,
-	nodenames = {"nc_igneous:amalgam"},
+	nodenames = {hotrock},
 	action = function(pos)
 		local above = pos:offset(0, 1, 0)
 		local abnod = core.get_node(above)

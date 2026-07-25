@@ -1,13 +1,11 @@
 -- LUALOCALS < ---------------------------------------------------------
-local core, nodecore, pairs, ipairs
-    = core, nodecore, pairs, ipairs
+local core, nodecore
+    = core, nodecore
 -- LUALOCALS > ---------------------------------------------------------
 
 local modname = core.get_current_modname()
-local get_node = core.get_node
-local set_node = core.swap_node
 
-local wsrc = "nc_terrain:water_source"
+--local wsrc = "nc_terrain:water_source"
 local wflw = "nc_terrain:water_flowing"
 
 --------------------Steam Node Generation--------------------
@@ -60,13 +58,11 @@ nodecore.register_abm({
 	interval = 1,
 	chance = 1,
 	nodenames = {modname .. ":steam"},
-	action = function(pos, node)
-		local pressure = #nodecore.find_nodes_around(pos, "group:steam")
-		local airway = #nodecore.find_nodes_around(pos, "air")
-		if pressure ~= 0 and airway == 0 then
-			nodecore.set_node(pos, {name = modname .. ":steam_dense"})
-			nodecore.sound_play("nc_api_craft_hiss", {pos = pos, gain = 0.02, fade = 1})
-		end
+	without_neighbors = {"air"},
+	neighbors = {"group:steam"},
+	action = function(pos)
+		nodecore.set_node(pos, {name = modname .. ":steam_dense"})
+		nodecore.sound_play("nc_api_craft_hiss", {pos = pos, gain = 0.02, fade = 1})
 	end
 })
 
@@ -75,10 +71,10 @@ nodecore.register_abm({
 	interval = 1,
 	chance = 1,
 	nodenames = {modname .. ":steam_dense"},
-	action = function(pos, node)
+	neighbors = {"air"},
+	action = function(pos)
 		local pressure = #nodecore.find_nodes_around(pos, "group:steam")
-		local airway = #nodecore.find_nodes_around(pos, "air")
-		if pressure < 4 and airway ~= 0 then
+		if pressure < 4 then
 			nodecore.set_node(pos, {name = modname .. ":steam"})
 		end
 	end

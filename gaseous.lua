@@ -1,17 +1,14 @@
 -- LUALOCALS < ---------------------------------------------------------
-local core, nodecore, math
-    = core, nodecore, math
+local core, nodecore, math, vector
+    = core, nodecore, math, vector
 -- LUALOCALS > ---------------------------------------------------------
-local modname = core.get_current_modname()
-local get_node = core.get_node
-local set_node = core.swap_node
+
 local directions = {
 	vector.new( 1, 0, 0),
 	vector.new(-1, 0, 0),
 	vector.new( 0, 0, 1),
 	vector.new( 0, 0,-1),
 }
-local steam = {name = modname.. ":steam"}
 
 ----- ----- Lighter Than Air ----- -----
 nodecore.register_abm({
@@ -20,12 +17,11 @@ nodecore.register_abm({
 	interval = 1,
 	chance = 2,
 	action = function(pos, node)
-		local next_pos = pos:offset(0,1,0)
-		local next_node = core.get_node(next_pos)
-		local node = core.get_node(pos)
-		if next_node.name == "air" then
-			core.swap_node(next_pos, node)
-			core.swap_node(pos, next_node)
+		local above = pos:offset(0,1,0)
+		local abnod = core.get_node(above)
+		if abnod.name == "air" then
+			core.swap_node(above, node)
+			core.swap_node(pos, abnod)
 		else
 			local dir = directions[math.random(1,4)]
 			local next_pos = vector.add(pos, dir)
@@ -44,41 +40,16 @@ nodecore.register_abm({
 	interval = 2,
 	chance = 1,
 	action = function(pos, node)
-		local next_pos = pos:offset(0,1,0)
-		local next_node = core.get_node(next_pos)
-		local node = core.get_node(pos)
-		if next_node.name == "nc_terrain:water_flowing" then
-			core.swap_node(next_pos, node)
-			core.swap_node(pos, next_node)
+		local above = pos:offset(0,1,0)
+		local abnod = core.get_node(above)
+		if core.get_item_group(abnod.name, "water") > 0 then
+			core.swap_node(above, node)
+			core.swap_node(pos, abnod)
 		else
 			local dir = directions[math.random(1,4)]
 			local next_pos = vector.add(pos, dir)
 			local next_node = core.get_node(next_pos)
-			if next_node.name == "nc_terrain:water_flowing" then
-				core.swap_node(next_pos, node)
-				core.swap_node(pos, next_node)
-			end
-		end
-	end,
-})
-
-nodecore.register_abm({
-	label = "gaseous:lighter than water source",
-	nodenames = {"group:gaseous"},
-	interval = 2,
-	chance = 1,
-	action = function(pos, node)
-		local next_pos = pos:offset(0,1,0)
-		local next_node = core.get_node(next_pos)
-		local node = core.get_node(pos)
-		if next_node.name == "nc_terrain:water_source" then
-			core.swap_node(next_pos, node)
-			core.swap_node(pos, next_node)
-		else
-			local dir = directions[math.random(1,4)]
-			local next_pos = vector.add(pos, dir)
-			local next_node = core.get_node(next_pos)
-			if next_node.name == "nc_terrain:water_source" then
+			if core.get_item_group(next_node.name, "water") > 0 then
 				core.swap_node(next_pos, node)
 				core.swap_node(pos, next_node)
 			end
@@ -92,11 +63,11 @@ nodecore.register_abm({
 	interval = 1,
 	chance = 10,
 	nodenames = {"group:gaseous"},
-	action = function(pos, node)
+	action = function(pos)
 		local pressure = #nodecore.find_nodes_around(pos, "group:gaseous")
 		local airway = #nodecore.find_nodes_around(pos, "air")
 		if pressure < 4 and airway > 2 then
-			nodecore.set_node(pos, {name = "air"})
+			core.remove_node(pos)
 		end
 	end
 })
@@ -106,11 +77,12 @@ nodecore.register_abm({
 	interval = 1,
 	chance = 1,
 	nodenames = {"group:gaseous"},
-	action = function(pos, node)
-		local altitude = pos.y
+	neighbors = {"air"},
+	min_y = 121,
+	action = function(pos)
 		local airway = #nodecore.find_nodes_around(pos, "air")
-		if altitude > 120 and airway > 1 then
-			nodecore.set_node(pos, {name = "air"})
+		if airway > 1 then
+			core.remove_node(pos)
 		end
 	end
 })

@@ -1,6 +1,6 @@
 -- LUALOCALS < ---------------------------------------------------------
-local include, nodecore
-    = include, nodecore
+local include
+    = include
 -- LUALOCALS > ---------------------------------------------------------
 
 include("nodes")

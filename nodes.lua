@@ -1,6 +1,6 @@
 -- LUALOCALS < ---------------------------------------------------------
-local core, nodecore, pairs, ipairs
-    = core, nodecore, pairs, ipairs
+local core
+    = core
 -- LUALOCALS > ---------------------------------------------------------
 
 local modname = core.get_current_modname()
