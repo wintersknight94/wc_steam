@@ -1,11 +1,11 @@
 -- LUALOCALS < ---------------------------------------------------------
-local minetest, nodecore, pairs, ipairs
-    = minetest, nodecore, pairs, ipairs
+local core, nodecore, pairs, ipairs
+    = core, nodecore, pairs, ipairs
 -- LUALOCALS > ---------------------------------------------------------
 
-local modname = minetest.get_current_modname()
-local get_node = minetest.get_node
-local set_node = minetest.swap_node
+local modname = core.get_current_modname()
+local get_node = core.get_node
+local set_node = core.swap_node
 
 local wsrc = "nc_terrain:water_source"
 local wflw = "nc_terrain:water_flowing"
@@ -20,7 +20,7 @@ nodecore.register_abm({
 		neightbors_invert = true,
 		action = function(pos)
 			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
-			local abnod = minetest.get_node(above)
+			local abnod = core.get_node(above)
 				if abnod.name == "air" then
 					nodecore.set_node(above, {name = modname .. ":steam"})
 					nodecore.sound_play("nc_api_craft_hiss", {pos = pos, gain = 0.02, fade = 1})
@@ -41,8 +41,8 @@ nodecore.register_abm({
 		action = function(pos)
 			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
 			local coil_pos = {x = pos.x, y = pos.y - 2, z = pos.z}
-			local coil_node = minetest.get_node(coil_pos)
-			local abnod = minetest.get_node(above)
+			local coil_node = core.get_node(coil_pos)
+			local abnod = core.get_node(above)
 			     if abnod.name == "air" then
 			          if coil_node.name == "nc_fire:fire" then
 		                    nodecore.set_node(above, {name = modname .. ":steam"})

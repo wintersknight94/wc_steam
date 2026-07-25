@@ -1,8 +1,8 @@
 -- LUALOCALS < ---------------------------------------------------------
-local minetest, nodecore, math
-    = minetest, nodecore, math
+local core, nodecore, math
+    = core, nodecore, math
 -- LUALOCALS > ---------------------------------------------------------
-local modname = minetest.get_current_modname()
+local modname = core.get_current_modname()
 local hotrock = "nc_igneous:amalgam"
 ------------------------------------------------------------------------
 local function steamy(posa, posb)
@@ -19,7 +19,7 @@ local function steamy(posa, posb)
 	}
 	local volume = (maxpos.x - minpos.x + 1) * (maxpos.y - minpos.y + 1)
 	* (maxpos.z - minpos.z + 1)
-	minetest.add_particlespawner({
+	core.add_particlespawner({
 			amount = 5 * volume,
 			time = 10,
 			minpos = minpos,
@@ -42,7 +42,7 @@ nodecore.register_abm({
 		nodenames = {"nc_igneous:amalgam"},
 		action = function(pos)
 			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
-			local abnod = minetest.get_node(above)
+			local abnod = core.get_node(above)
 			     if abnod.name == "nc_terrain:water_source" then
 					steamy(pos)
 					nodecore.sound_play("nc_api_craft_hiss", {pos = pos, gain = 0.02, fade = 1})

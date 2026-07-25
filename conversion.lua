@@ -1,12 +1,12 @@
 -- LUALOCALS < ---------------------------------------------------------
-local minetest, nodecore
-    = minetest, nodecore
+local core, nodecore
+    = core, nodecore
 -- LUALOCALS > ---------------------------------------------------------
-local modname = minetest.get_current_modname()
+local modname = core.get_current_modname()
 ------------------------------------------------------------------------
 
 
-minetest.register_alias("nc_steam:steam",					modname.. ":steam")
-minetest.register_alias("nc_steam:steam_dense",					modname.. ":steam_dense")
+core.register_alias("nc_steam:steam",					modname.. ":steam")
+core.register_alias("nc_steam:steam_dense",					modname.. ":steam_dense")
 
 

@@ -1,12 +1,12 @@
 -- LUALOCALS < ---------------------------------------------------------
-local minetest, nodecore, pairs, ipairs
-    = minetest, nodecore, pairs, ipairs
+local core, nodecore, pairs, ipairs
+    = core, nodecore, pairs, ipairs
 -- LUALOCALS > ---------------------------------------------------------
 
-local modname = minetest.get_current_modname()
+local modname = core.get_current_modname()
 
 --------------------Steam Nodes--------------------
-minetest.register_node(modname ..":steam", {
+core.register_node(modname ..":steam", {
 		description = "Steam",
 		tiles = {"nc_concrete_etched.png^[opacity:50"},
 --		tiles = {modname .. "_thin.png"},
@@ -30,7 +30,7 @@ minetest.register_node(modname ..":steam", {
 		color = "white"
 	})
 
-minetest.register_node(modname ..":steam_dense", {
+core.register_node(modname ..":steam_dense", {
 		description = "Steam",
 		tiles = {"nc_concrete_etched.png^[opacity:100"},
 --		tiles = {modname .. "_dense.png"},

@@ -1,10 +1,10 @@
 -- LUALOCALS < ---------------------------------------------------------
-local minetest, nodecore, math
-    = minetest, nodecore, math
+local core, nodecore, math
+    = core, nodecore, math
 -- LUALOCALS > ---------------------------------------------------------
-local modname = minetest.get_current_modname()
-local get_node = minetest.get_node
-local set_node = minetest.swap_node
+local modname = core.get_current_modname()
+local get_node = core.get_node
+local set_node = core.swap_node
 local directions = {
 	{x=1, y=0, z=0},
 	{x=-1, y=0, z=0},
@@ -21,18 +21,18 @@ nodecore.register_abm({
      chance = 2,
      action = function(pos, node)
           local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
-		local next_node = minetest.get_node(next_pos)
-		 local node = minetest.get_node(pos)
+		local next_node = core.get_node(next_pos)
+		 local node = core.get_node(pos)
 			if next_node.name == "air" then
-				minetest.swap_node(next_pos, node)
-				minetest.swap_node(pos, next_node)
+				core.swap_node(next_pos, node)
+				core.swap_node(pos, next_node)
 			else 
 			     local dir = directions[math.random(1,4)]
 				local next_pos = vector.add(pos, dir)
-				local next_node = minetest.get_node(next_pos)	
+				local next_node = core.get_node(next_pos)
 				     if next_node.name == "air" then
-				          minetest.swap_node(next_pos, node)
-				          minetest.swap_node(pos, next_node)
+				          core.swap_node(next_pos, node)
+				          core.swap_node(pos, next_node)
                end
           end
      end,
@@ -45,18 +45,18 @@ nodecore.register_abm({
      chance = 1,
      action = function(pos, node)
           local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
-		local next_node = minetest.get_node(next_pos)
-		 local node = minetest.get_node(pos)
+		local next_node = core.get_node(next_pos)
+		 local node = core.get_node(pos)
 			if next_node.name == "nc_terrain:water_flowing" then
-				minetest.swap_node(next_pos, node)
-				minetest.swap_node(pos, next_node)
+				core.swap_node(next_pos, node)
+				core.swap_node(pos, next_node)
 			else 
 			     local dir = directions[math.random(1,4)]
 				local next_pos = vector.add(pos, dir)
-				local next_node = minetest.get_node(next_pos)	
+				local next_node = core.get_node(next_pos)
 				     if next_node.name == "nc_terrain:water_flowing" then
-				          minetest.swap_node(next_pos, node)
-				          minetest.swap_node(pos, next_node)
+				          core.swap_node(next_pos, node)
+				          core.swap_node(pos, next_node)
                end
           end
      end,
@@ -69,18 +69,18 @@ nodecore.register_abm({
      chance = 1,
      action = function(pos, node)
           local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
-		local next_node = minetest.get_node(next_pos)
-		 local node = minetest.get_node(pos)
+		local next_node = core.get_node(next_pos)
+		 local node = core.get_node(pos)
 			if next_node.name == "nc_terrain:water_source" then
-				minetest.swap_node(next_pos, node)
-				minetest.swap_node(pos, next_node)
+				core.swap_node(next_pos, node)
+				core.swap_node(pos, next_node)
 			else 
 			     local dir = directions[math.random(1,4)]
 				local next_pos = vector.add(pos, dir)
-				local next_node = minetest.get_node(next_pos)	
+				local next_node = core.get_node(next_pos)
 				     if next_node.name == "nc_terrain:water_source" then
-				          minetest.swap_node(next_pos, node)
-				          minetest.swap_node(pos, next_node)
+				          core.swap_node(next_pos, node)
+				          core.swap_node(pos, next_node)
                end
           end
      end,
@@ -93,7 +93,6 @@ nodecore.register_abm({
 		chance = 10,
 		nodenames = {"group:gaseous"},
 		action = function(pos, node)
-		local node = minetest.get_node(pos)	
 		 local pressure = #nodecore.find_nodes_around(pos, "group:gaseous")
 		  local airway = #nodecore.find_nodes_around(pos, "air")
                if pressure < 4 and airway > 2 then
