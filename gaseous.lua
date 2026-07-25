@@ -78,10 +78,11 @@ nodecore.register_abm({
 	chance = 1,
 	nodenames = {"group:gaseous"},
 	neighbors = {"air"},
-	min_y = 121,
 	action = function(pos)
+		if pos.y <= 120 then return end
 		local airway = #nodecore.find_nodes_around(pos, "air")
 		if airway > 1 then
+			core.log("gone "..tostring(pos))
 			core.remove_node(pos)
 		end
 	end
