@@ -6,10 +6,10 @@ local modname = core.get_current_modname()
 local get_node = core.get_node
 local set_node = core.swap_node
 local directions = {
-	{x=1, y=0, z=0},
-	{x=-1, y=0, z=0},
-	{x=0, y=0, z=1},
-	{x=0, y=0, z=-1},
+	vector.new( 1, 0, 0),
+	vector.new(-1, 0, 0),
+	vector.new( 0, 0, 1),
+	vector.new( 0, 0,-1),
 }
 local steam = {name = modname.. ":steam"}
 
@@ -20,7 +20,7 @@ nodecore.register_abm({
      interval = 1,
      chance = 2,
      action = function(pos, node)
-          local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
+          local next_pos = pos:offset(0,1,0)
 		local next_node = core.get_node(next_pos)
 		 local node = core.get_node(pos)
 			if next_node.name == "air" then
@@ -44,7 +44,7 @@ nodecore.register_abm({
      interval = 2,
      chance = 1,
      action = function(pos, node)
-          local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
+          local next_pos = pos:offset(0,1,0)
 		local next_node = core.get_node(next_pos)
 		 local node = core.get_node(pos)
 			if next_node.name == "nc_terrain:water_flowing" then
@@ -68,7 +68,7 @@ nodecore.register_abm({
      interval = 2,
      chance = 1,
      action = function(pos, node)
-          local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
+          local next_pos = pos:offset(0,1,0)
 		local next_node = core.get_node(next_pos)
 		 local node = core.get_node(pos)
 			if next_node.name == "nc_terrain:water_source" then

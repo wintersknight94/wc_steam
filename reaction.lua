@@ -19,7 +19,7 @@ nodecore.register_abm({
 		neighbors = {"group:igniter"},
 		neightbors_invert = true,
 		action = function(pos)
-			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
+			local above = pos:offset(0,1,0)
 			local abnod = core.get_node(above)
 				if abnod.name == "air" then
 					nodecore.set_node(above, {name = modname .. ":steam"})
@@ -39,8 +39,8 @@ nodecore.register_abm({
 		chance = 4,
 		nodenames = {"group:water"},
 		action = function(pos)
-			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
-			local coil_pos = {x = pos.x, y = pos.y - 2, z = pos.z}
+			local above = pos:offset(0,1,0)
+			local coil_pos = pos:offset(0,-2,0)
 			local coil_node = core.get_node(coil_pos)
 			local abnod = core.get_node(above)
 			     if abnod.name == "air" then
